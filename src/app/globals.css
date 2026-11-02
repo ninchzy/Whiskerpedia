@@ -1,0 +1,394 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Design tokens ───────────────────────── */
+@theme {
+  --color-cream-50: #fffdf8;
+  --color-cream-100: #fff8ee;
+  --color-cream-200: #fbeedb;
+  --color-cream-300: #f5dfc2;
+
+  --color-clay-100: #fbe3da;
+  --color-clay-300: #f0a58e;
+  --color-clay-400: #e07a5f;
+  --color-clay-500: #cc6248;
+  --color-clay-600: #b9503a; /* white text passes AA on this */
+  --color-clay-700: #93402e;
+
+  --color-pink-50: #fff1f3;
+  --color-pink-100: #fde4e8;
+  --color-pink-200: #f9c9d1;
+  --color-pink-300: #f3a6b4;
+  --color-pink-600: #b8435c;
+
+  --color-lavender-50: #f5f2fc;
+  --color-lavender-100: #ebe5f8;
+  --color-lavender-200: #d8cdf1;
+  --color-lavender-600: #6a56a6;
+
+  --color-sage-50: #f1f7ee;
+  --color-sage-100: #e2eedc;
+  --color-sage-200: #c9dfc0;
+  --color-sage-600: #4c7546;
+
+  --color-butter-50: #fff8e3;
+  --color-butter-100: #fff0c4;
+  --color-butter-200: #ffe39b;
+  --color-butter-300: #fdd36b;
+  --color-butter-700: #8a6209;
+
+  --color-ink: #4a3b35;
+  --color-ink-soft: #6e5a52;
+  --color-ink-faint: #9a857b;
+
+  --radius-blob: 2.25rem;
+
+  --shadow-soft: 0 10px 30px -12px rgb(122 70 48 / 0.22), 0 2px 6px -2px rgb(122 70 48 / 0.08);
+  --shadow-lift: 0 18px 40px -14px rgb(122 70 48 / 0.3), 0 4px 10px -4px rgb(122 70 48 / 0.1);
+  --shadow-pill: 0 3px 0 0 rgb(147 64 46 / 0.25);
+
+  --animate-wiggle: wiggle 0.9s ease-in-out;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pop: pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+  --animate-fade-up: fade-up 0.6s ease-out both;
+}
+
+@theme inline {
+  --font-display: var(--font-fredoka), ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-hand: var(--font-caveat), "Comic Sans MS", cursive;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-cream-100 font-sans text-ink antialiased;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-ink;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-clay-600);
+    outline-offset: 3px;
+    border-radius: 0.6rem;
+  }
+  ::selection {
+    background: var(--color-pink-200);
+  }
+}
+
+/* ───────────────────────── Components ───────────────────────── */
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-2.5 font-display text-base font-semibold transition-all duration-200 select-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn:not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+  .btn:not(:disabled):active {
+    transform: translateY(1px);
+  }
+  .btn-primary {
+    @apply bg-clay-600 text-white hover:bg-clay-700;
+    box-shadow: var(--shadow-pill);
+  }
+  .btn-secondary {
+    @apply border-2 border-clay-400 bg-cream-50 text-clay-700 hover:bg-clay-100;
+  }
+  .btn-soft {
+    @apply bg-cream-200 text-ink hover:bg-cream-300;
+  }
+  .btn-ghost {
+    @apply text-ink-soft hover:bg-cream-200 hover:text-ink;
+  }
+  .btn-sm {
+    @apply min-h-9 px-4 py-1.5 text-sm;
+  }
+
+  .card {
+    @apply rounded-[1.75rem] bg-cream-50;
+    box-shadow: var(--shadow-soft);
+  }
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  .card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold;
+  }
+
+  .eyebrow {
+    @apply font-display text-xs font-semibold tracking-[0.18em] text-clay-600 uppercase;
+  }
+  .hand {
+    @apply font-hand text-xl leading-tight;
+  }
+
+  .input {
+    @apply min-h-11 w-full rounded-full border-2 border-cream-300 bg-cream-50 px-5 py-2 text-ink placeholder:text-ink-faint focus:border-clay-400 focus:outline-none;
+  }
+
+  /* Paw-dot background, as on the stationery card reference. */
+  .bg-dots {
+    background-color: var(--color-cream-200);
+    background-image: radial-gradient(circle at 1px 1px, rgb(224 122 95 / 0.16) 2.5px, transparent 3px);
+    background-size: 26px 26px;
+  }
+  /* Hand-drawn plaid behind cat illustrations. */
+  .bg-plaid {
+    background-color: #fffaf4;
+    background-image:
+      linear-gradient(90deg, rgb(240 165 142 / 0.28) 2px, transparent 2px),
+      linear-gradient(0deg, rgb(240 165 142 / 0.28) 2px, transparent 2px);
+    background-size: 22px 22px;
+    background-position: -1px -1px;
+  }
+
+  .prose-cat {
+    @apply max-w-prose text-[1.0625rem] leading-relaxed text-ink-soft;
+  }
+  .prose-cat p + p {
+    @apply mt-4;
+  }
+
+  .dotted-rule {
+    height: 6px;
+    background-image: radial-gradient(circle, var(--color-clay-400) 2.5px, transparent 3px);
+    background-size: 16px 6px;
+    background-repeat: repeat-x;
+  }
+}
+
+/* ───────────────────────── Motion ───────────────────────── */
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-12deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(-6deg);
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+@keyframes wave {
+  0%,
+  60%,
+  100% {
+    transform: rotate(0deg);
+  }
+  15%,
+  45% {
+    transform: rotate(-18deg);
+  }
+  30% {
+    transform: rotate(8deg);
+  }
+}
+@keyframes zzz {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.7);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(10px, -22px) scale(1.1);
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+@keyframes paw-trail {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.6) rotate(var(--r, 0deg));
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(1) rotate(var(--r, 0deg));
+  }
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mascot-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 5s infinite;
+}
+.mascot-tail {
+  transform-box: fill-box;
+  transform-origin: 0% 100%;
+}
+.mascot:hover .mascot-tail,
+.mascot:focus-visible .mascot-tail {
+  animation: var(--animate-wiggle);
+}
+/* Hover: Mochi's head does a little bounce from the neck. */
+.mascot-head {
+  transform-box: fill-box;
+  transform-origin: 50% 92%;
+}
+.mascot:hover .mascot-head,
+.mascot:focus-visible .mascot-head {
+  animation: head-bob 0.6s ease;
+}
+@keyframes head-bob {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.12) translateY(-3%);
+  }
+  70% {
+    transform: scale(0.97);
+  }
+}
+.mascot-wave {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: wave 2.6s ease-in-out infinite;
+}
+.mascot-zzz {
+  animation: zzz 2.8s ease-out infinite;
+}
+.mascot-zzz:nth-of-type(2) {
+  animation-delay: 1.4s;
+}
+.twinkle {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: twinkle 1.8s ease-in-out infinite;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.heart-pop {
+  animation: var(--animate-pop);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .btn:hover,
+  .card-hover:hover {
+    transform: none !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
